@@ -1,3 +1,4 @@
+import copy
 class MatrixDeterminantCalculator:
     # multiply a given list with the scaler
     def multiplyRow(self, row: list[float], scaler: float) -> list[float]:

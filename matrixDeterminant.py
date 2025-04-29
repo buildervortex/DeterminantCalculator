@@ -110,12 +110,12 @@ class MatrixDeterminantCalculatorApp(QMainWindow):
         return matrix
 
     def calculate_determinant(self):
-        try:
-            matrix = self.get_matrix_values()
-            determinant = self.calculator.calculateMatrixDeterminant(matrix)
-            self.result_display.setText(str(determinant))
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
+        # try:
+        matrix = self.get_matrix_values()
+        determinant = self.calculator.calculateMatrixDeterminant(matrix)
+        self.result_display.setText(str(determinant))
+        # except Exception as e:
+        #     QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
 
     def clear_all(self):
         for row in self.matrix_inputs:
