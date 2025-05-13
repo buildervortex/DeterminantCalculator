@@ -96,44 +96,32 @@ class MatrixDeterminantCalculator:
 
         return matrixCopy
 
-    # calculate the determinant of a upper triangle matrix by multiplying all the values in the diagonal
-    def determinantOfUpperTriangleMatrix(self, matrix: list[list[float]], sign: int):
-        # If sign is 0, return 0 immediately
-        if sign == 0:
-            return 0
-
+    # calculate the determinant of a upper triangle matrix
+    def determinantOfU(self, matrix: list[list[float]], sign: int):
         pivotPoints = []
-        determinant = 1
+        multiplication = 1
 
-        # loop through the matrix and save all the diagonal numbers in the pivotPoints list
         for rowIndex in range(0, len(matrix)):
-            pivotPoints.append(matrix[rowIndex][rowIndex])
+            value = matrix[rowIndex][rowIndex]
 
-        # calculate the multiplier of diagonal line numbers
-        for point in pivotPoints:
-            determinant *= point
+            # if any of the diagonal value is zero, return 0 as the determinant
+            if value == 0:
+                return 0
 
-        # multiply the determinant by the sign
-        return determinant * sign
+            multiplication *= value
 
-    # combine all the above methods to create single point of use
+        return multiplication * sign
+
     def calculateMatrixDeterminant(self, matrix: list[list[float]]) -> float:
 
         if not self.isSquareMatrix(matrix=matrix):
             raise ValueError("Matrix is not a square matrix")
 
-        sign, sortMatrix = self.swapToMakeNonZeroPivotPoints(matrix)
+        sign, swappedMatrix = self.swapToMakeNonZeroPivotPoints(matrix)
 
-        # If sign is 0, determinant is 0
-        if sign == 0:
-            return 0
+        upperTriangleMatrix = self.guassianElimination(swappedMatrix)
 
-        upperTriangleMatrix = self.guassianElimination(sortMatrix)
-
-        result = self.determinantOfUpperTriangleMatrix(
+        result = self.determinantOfU(
             upperTriangleMatrix, sign)
 
-        # Round to handle floating point errors, but don't use ceil
-        if abs(result - round(result)) < 1e-10:
-            return round(result)
         return result
